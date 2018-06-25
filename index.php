@@ -2,7 +2,14 @@
 
 $name = getenv('NAME');
 $hostname = gethostname();
-$visits = 0;
+$visits = -1;
+
+$redis = new Redis();
+if ($redis->connect('redis', 6379, 2)) {
+    $visits = $redis->incr('counter');
+} else {
+    $visits = 'Unknown (could not connect to Redis)';
+}
 
 ?>
 

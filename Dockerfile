@@ -1,4 +1,7 @@
-FROM php:7-alpine
+FROM php:7
+
+RUN pecl install redis-4.0.1 \
+  && docker-php-ext-enable redis
 
 WORKDIR /app
 
