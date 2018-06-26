@@ -11,4 +11,4 @@ EXPOSE 89
 
 ENV NAME World
 
-CMD ["php", "-S", "0.0.0.0:80", "index.php"]
+CMD ["php", "-S", "0.0.0.0:80"]
