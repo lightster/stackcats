@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   web:
     image: lightster/stackcats:latest
@@ -14,6 +14,9 @@ services:
       - "80:80"
     networks:
       - webnet
+    secrets:
+      - source: shh
+        target: shh
   visualizer:
     image: dockersamples/visualizer:stable
     ports:
@@ -39,3 +42,7 @@ services:
       - webnet
 networks:
   webnet:
+secrets:
+  shh:
+    file: ./shh.txt
+    name: "${shh_name:-one}"

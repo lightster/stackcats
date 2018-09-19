@@ -11,7 +11,16 @@ docker-machine ssh stackcats01 "docker swarm init --advertise-addr <stackcats-ip
 docker-machine ssh stackcats02 "docker swarm join --token <token-from-init> <stackcats01-ip-address>"
 eval $(docker-machine env stackcats01)
 docker-machine ssh stackcats01 "mkdir ./data"
+echo "hello" >shh.txt
 docker stack deploy -c docker-compose.yml kcatstack
+
+# 'update' the secret by transitioning to a temp secret and back again
+echo "ciao" >shh.txt
+shh_name=kcatstack-two docker stack deploy -c docker-compose.yml kcatstack \
+  && docker secret rm kcatstack-one \
+  && docker stack deploy -c docker-compose.yml kcatstack \
+  && docker secret rm kcatstack-two
+
 docker stack ps kcatstack
 docker stack rm kcatstack
 eval $(docker-machine env -u)
